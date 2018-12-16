@@ -16,14 +16,16 @@ host = 'localhost'
 def on_connect(client, userdata, flags, rc):
     """On client connect."""
     print("Connected with result code " + str(rc))
-    client.subscribe("/test")
+    client.subscribe("/test/hello")
+    client.subscribe("/test/world")
 
 
 def on_message(client, userdata, msg):
     """On sending a message."""
-    if msg.payload.decode() == "Hello world!":
-        print("Yes!")
-        client.disconnect()
+    if msg.payload:
+        print(str(msg.payload))
+    else:
+        print("No message was sent!")
 
 
 if __name__ == '__main__':
